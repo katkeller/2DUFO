@@ -11,11 +11,14 @@ public class PlayerController : MonoBehaviour
     private float Speed;
     [SerializeField]
     private Text CountText;
+    [SerializeField]
+    private Text WinText;
 
 	void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         count = 0;
+        WinText.text = "";
         SetCountText();
 	}
 	
@@ -39,5 +42,9 @@ public class PlayerController : MonoBehaviour
     private void SetCountText()
     {
         CountText.text = "Score: " + count.ToString();
+        if (count >= 12)
+        {
+            WinText.text = "You Win!";
+        }
     }
 }

@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    private int count;
     private Rigidbody2D rb2d;
     [SerializeField]
     private float Speed;
@@ -13,16 +12,43 @@ public class PlayerController : MonoBehaviour
     private Text CountText;
     [SerializeField]
     private Text WinText;
+    [SerializeField]
+    private Text timerText;
+    [SerializeField]
+    private float timerStartTime;
 
-	void Start()
+    private float timer;
+    private bool canCountDown = true;
+    private bool doOnce = false;
+    private int count;
+
+    void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
         count = 0;
         WinText.text = "";
         SetCountText();
-	}
-	
-	void FixedUpdate()
+
+        timer = timerStartTime;
+    }
+
+    void Update()
+    {
+        if (timer >= 0.0f && canCountDown)
+        {
+            timer -= Time.deltaTime;
+            timerText.text = timer.ToString("F");
+        }
+        else if (timer <= 0.0f && !doOnce)
+        {
+            canCountDown = false;
+            doOnce = true;
+            timerText.text = "0.00";
+            timer = 0.0f;
+        }
+    }
+
+    void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");

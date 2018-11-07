@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool canCountDown = true;
     private bool doOnce = false;
     private int count;
+    private bool canMove = true;
 
     void Start()
     {
@@ -45,15 +46,21 @@ public class PlayerController : MonoBehaviour
             doOnce = true;
             timerText.text = "0.00";
             timer = 0.0f;
+            canMove = false;
+            SetCountText();
         }
     }
 
     void FixedUpdate()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-        Vector2 movement = new Vector2(moveHorizontal, moveVertical);
-        rb2d.AddForce(movement*Speed);
+        if (canMove)
+        {
+            float moveHorizontal = Input.GetAxis("Horizontal");
+            float moveVertical = Input.GetAxis("Vertical");
+            Vector2 movement = new Vector2(moveHorizontal, moveVertical);
+            rb2d.AddForce(movement*Speed);
+        }
+        
 	}
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -71,6 +78,11 @@ public class PlayerController : MonoBehaviour
         if (count >= 12)
         {
             WinText.text = "You Win!";
+            canCountDown = false;
         }
+        //else if (count < 12 && !canMove)
+        //{
+        //    WinText.text = "You lose!";
+       // }
     }
 }

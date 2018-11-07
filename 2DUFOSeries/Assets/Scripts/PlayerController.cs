@@ -80,9 +80,9 @@ public class PlayerController : MonoBehaviour
             WinText.text = "You Win!";
             canCountDown = false;
         }
-        //else if (count < 12 && !canMove)
-        //{
-        //    WinText.text = "You lose!";
-       // }
+        else if (count < 12 && !canMove)
+        {
+            WinText.text = "You lose!";
+        }
     }
 }

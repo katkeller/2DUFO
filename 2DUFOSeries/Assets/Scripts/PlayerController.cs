@@ -60,6 +60,10 @@ public class PlayerController : MonoBehaviour
             Vector2 movement = new Vector2(moveHorizontal, moveVertical);
             rb2d.AddForce(movement*Speed);
         }
+        else if (!canMove)
+        {
+            rb2d.velocity = Vector2.zero;
+        }
         
 	}
 
